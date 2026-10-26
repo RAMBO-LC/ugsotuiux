@@ -73,13 +73,39 @@ body {
 
 /* Timer */
 .timer-well {
-  width: 200px;
-  height: 200px;
+  width: 210px;
+  height: 210px;
   border-radius: 50%;
   background: var(--surface-2);
   box-shadow: var(--shadow-inset);
   display: grid;
   place-items: center;
+  position: relative;
+}
+
+.timer-ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+  pointer-events: none;
+}
+
+.ring-track {
+  fill: none;
+  stroke: var(--surface);
+  stroke-width: 6;
+}
+
+.ring-progress {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-dasharray: 578;
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 250ms linear;
 }
 
 .timer-inner {
@@ -218,8 +244,8 @@ body {
 
 /* Books */
 .book {
-  width: 170px;
-  height: 240px;
+  width: 180px;
+  height: 250px;
   cursor: pointer;
   border: none;
   background: transparent;
@@ -227,6 +253,14 @@ body {
   position: relative;
   transition: transform var(--dur-med) var(--ease);
   outline: none;
+}
+
+.book:hover {
+  transform: translateY(-4px);
+}
+
+.book.active:hover {
+  transform: translateY(-10px);
 }
 
 .book:focus-visible .cover {
@@ -373,6 +407,18 @@ body {
 
 .cover-b .cover-title { color: var(--text); }
 
+.cover::after {
+  content: "";
+  position: absolute;
+  left: 20px;
+  right: 14px;
+  bottom: 18px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--accent);
+  opacity: 0.8;
+}
+
 .book.open .cover {
   transform: rotateY(-150deg);
 }
@@ -442,6 +488,24 @@ body {
 .field input:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
+}
+
+.shortcuts {
+  font-size: 11px;
+  color: var(--text-muted);
+  border-top: 1px solid rgba(0,0,0,0.06);
+  padding-top: var(--space-2);
+}
+
+.shortcuts summary {
+  cursor: pointer;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.shortcuts p {
+  margin: var(--space-2) 0 0;
+  line-height: 1.5;
 }
 
 /* Responsive */

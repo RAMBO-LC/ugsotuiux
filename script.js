@@ -132,6 +132,18 @@ function renderTimer() {
     const active = m === t.mode;
     b.setAttribute('aria-selected', active ? 'true' : 'false');
   });
+  updateRing();
+}
+
+const RING_CIRC = 578;
+function updateRing() {
+  const ring = document.getElementById('timerRing');
+  if (!ring) return;
+  const t = state.timer;
+  const r = remainingNow();
+  const full = fullDuration(t.mode);
+  const frac = full > 0 ? clamp(r / full, 0, 1) : 0;
+  ring.style.strokeDashoffset = (RING_CIRC * (1 - frac)).toFixed(2);
 }
 
 function renderBooks() {
@@ -182,6 +194,7 @@ function tick() {
   if (t.status !== 'running') { clearTick(); return; }
   const r = remainingNow();
   document.getElementById('timerDisplay').textContent = formatTime(r);
+  updateRing();
   if (r <= 0) {
     completeSession();
   }
@@ -402,6 +415,39 @@ function wire() {
 
   document.addEventListener('visibilitychange', () => {
     if (!document.hidden) reconcile();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    const tag = e.target && e.target.tagName;
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    if (e.code === 'Space') {
+      e.preventDefault();
+      const t = state.timer;
+      if (t.status === 'running') pause(); else start();
+    } else if (e.key === 'r' || e.key === 'R') {
+      reset();
+    } else if (e.key === 's' || e.key === 'S') {
+      skip();
+    } else if (e.key === '1') {
+      selectMode('focus');
+    } else if (e.key === '2') {
+      selectMode('short');
+    } else if (e.key === '3') {
+      selectMode('long');
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      adjustPage(1);
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      adjustPage(-1);
+    } else if (e.key === 'a' || e.key === 'A') {
+      selectBook('A');
+    } else if (e.key === 'b' || e.key === 'B') {
+      selectBook('B');
+    } else if (e.key === 'o' || e.key === 'O') {
+      selectBook(state.activeBook);
+    }
   });
 
   wireSettings();
