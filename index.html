@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pomodoro Reading Desk</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="app-title">Pomodoro Reading Desk</header>
+
+  <main class="desk" id="desk">
+    <!-- Book A -->
+    <section class="book" id="bookA" data-book="A" tabindex="0" role="button"
+      aria-pressed="false" aria-label="Deep Work by Cal Newport">
+      <div class="book-scene">
+        <div class="book-body">
+          <div class="pages">
+            <div class="page-content">
+              <span class="page-number" id="pageA">Page 0</span>
+              <div class="progress-track" aria-hidden="true">
+                <div class="progress-fill" id="progressA"></div>
+              </div>
+              <span class="page-total">of 256</span>
+            </div>
+          </div>
+          <div class="cover cover-a">
+            <div class="spine"></div>
+            <div class="cover-inner">
+              <span class="cover-title">Deep Work</span>
+              <span class="cover-author">Cal Newport</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Center -->
+    <section class="center">
+      <div class="timer-well" aria-label="Timer">
+        <div class="timer-inner">
+          <div class="timer-display" id="timerDisplay" aria-live="polite">25:00</div>
+          <div class="timer-mode" id="timerMode">Focus</div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button class="btn btn-primary" id="startPauseBtn" type="button">Start</button>
+        <button class="btn" id="resetBtn" type="button">Reset</button>
+        <button class="btn" id="skipBtn" type="button">Skip</button>
+      </div>
+
+      <div class="mode-selector" role="tablist" aria-label="Session mode">
+        <button class="mode-btn" role="tab" data-mode="focus" aria-selected="true" type="button">Focus</button>
+        <button class="mode-btn" role="tab" data-mode="short" aria-selected="false" type="button">Short</button>
+        <button class="mode-btn" role="tab" data-mode="long" aria-selected="false" type="button">Long</button>
+      </div>
+
+      <p class="progress-line" id="progressLine">Sessions today: 0</p>
+      <div class="page-adjust" aria-label="Adjust active book page">
+        <button class="adj-btn" id="pageMinus" type="button" aria-label="Decrease page">−</button>
+        <button class="adj-btn" id="pagePlus" type="button" aria-label="Increase page">+</button>
+      </div>
+    </section>
+
+    <!-- Book B -->
+    <section class="book" id="bookB" data-book="B" tabindex="0" role="button"
+      aria-pressed="false" aria-label="Atomic Habits by James Clear">
+      <div class="book-scene">
+        <div class="book-body">
+          <div class="pages">
+            <div class="page-content">
+              <span class="page-number" id="pageB">Page 0</span>
+              <div class="progress-track" aria-hidden="true">
+                <div class="progress-fill" id="progressB"></div>
+              </div>
+              <span class="page-total">of 320</span>
+            </div>
+          </div>
+          <div class="cover cover-b">
+            <div class="spine"></div>
+            <div class="cover-inner">
+              <span class="cover-title">Atomic Habits</span>
+              <span class="cover-author">James Clear</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="settings">
+    <button class="settings-toggle" id="settingsToggle" type="button" aria-expanded="false" aria-controls="settingsPanel">Settings</button>
+    <div class="settings-panel" id="settingsPanel" hidden>
+      <label class="field">
+        <span>Focus (min)</span>
+        <input type="number" id="durFocus" min="1" max="120" />
+      </label>
+      <label class="field">
+        <span>Short break (min)</span>
+        <input type="number" id="durShort" min="1" max="60" />
+      </label>
+      <label class="field">
+        <span>Long break (min)</span>
+        <input type="number" id="durLong" min="1" max="60" />
+      </label>
+      <label class="field">
+        <span>Pages per session</span>
+        <input type="number" id="pagesPer" min="1" max="100" />
+      </label>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
